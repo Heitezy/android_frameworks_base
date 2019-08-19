@@ -5144,7 +5144,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     @Override
     public void crashApplication(int uid, int initialPid, String packageName,
-            String message) {
+            String message, boolean force) {
         if (checkCallingPermission(android.Manifest.permission.FORCE_STOP_PACKAGES)
                 != PackageManager.PERMISSION_GRANTED) {
             String msg = "Permission Denial: crashApplication() from pid="
@@ -5156,7 +5156,8 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
 
         synchronized(this) {
-            mAppErrors.scheduleAppCrashLocked(uid, initialPid, packageName, message);
+            mAppErrors.scheduleAppCrashLocked(uid, initialPid, packageName,
+                    message, force);
         }
     }
 
